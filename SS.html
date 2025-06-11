@@ -25,10 +25,46 @@
       </hgroup>
     </header>
     <main class="container">
+      <div style="display: flex; flex-direction: column; gap: 15px; align-items: flex-start;">
+        <input id="CWeight" type="text" placeholder="Enter Current Weight(Kg)" style="width: 350px;">
+        <input id="TWeight" type="text" placeholder="Enter Target Weight(Kg)" style="width: 350px;">
+        <input id="TPeriod" type="text" placeholder="Enter Time Period (in months)" style="width: 350px;">
+        
+        <button id="Btn">Calculate Steps</button>
+      </div>
       <section>
         <p id="result"></p>
       </section>
       <script>
+       //IIFE
+       function getRecommendedSteps(){
+        const Btn = document.getElementById("Btn");
+        const result = document.getElementById("result");
+
+        const inputElement_Cweight = document.getElementById("CWeight").value;
+        const inputElement_Tweight = document.getElementById("TWeight").value;
+        const inputElement_TPeriod = document.getElementById("TPeriod").value;
+      
+
+        let steps=0;
+        let duration=inputElement_TPeriod;        
+      
+        const deltaWeight =  inputElement_Cweight - inputElement_Tweight;
+        const caloriesBurn =  deltaWeight * 7700;
+        
+        const days = 30 * duration;
+        steps = Math.round((caloriesBurn / days) / 0.04);
+        
+        let message="";
+        if(steps){
+          message = `To reach your goal, walk at least ${steps.toLocaleString()} steps per day for ${duration} months`
+          console.log(message);
+        }
+         result.innerText = message;
+      };
+       
+      Btn.addEventListener("click",getRecommendedSteps);
+     
       </script>
     </main>
   </body>
